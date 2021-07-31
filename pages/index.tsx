@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
+import PageHead from "../components/PageHead";
 import ProductList, { IProductListProps } from "../components/ProductList";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useState } from "react";
@@ -13,7 +14,10 @@ export default function Home({ products, currency }: IHomepageProps) {
 
   return (
     <Layout title={"Products"} description={"All products from Lumin"}>
-      <ProductList products={products} currentCurrency={currentCurrency} />
+      <>
+        <PageHead />
+        <ProductList products={products} currentCurrency={currentCurrency} />
+      </>
     </Layout>
   );
 }

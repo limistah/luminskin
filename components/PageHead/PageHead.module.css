@@ -1,0 +1,28 @@
+.pageHeadcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pageHeadTitle {
+  font-weight: 300;
+}
+
+.pageHeadSlug {
+  font-weight: 300;
+}
+.pageHeadSelectInput {
+  width: 100%;
+  outline: 0px;
+  position: relative;
+  appearance: none;
+  transition: all 0.2s ease 0s;
+  padding: 2px 2rem 1px 1.25rem;
+  line-height: normal;
+  color: currentcolor;
+  height: 50px;
+  font-size: 1rem;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(205, 209, 206);
+  border-radius: 0px;
+}
