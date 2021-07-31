@@ -9,7 +9,18 @@ import "@fontsource/work-sans/500-italic.css";
 import "@fontsource/work-sans/700.css";
 import "@fontsource/work-sans/700-italic.css";
 
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const client = new ApolloClient({
+    uri: "https://pangaea-interviews.now.sh/api/graphql",
+    cache: new InMemoryCache(),
+  });
+
+  return (
+    <ApolloProvider client={client}>
+      <Component {...pageProps} gqlClient={client} />{" "}
+    </ApolloProvider>
+  );
 }
 export default MyApp;
