@@ -1,0 +1,34 @@
+.productListContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #e2e6e3;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.productItemContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.productItemTitle {
+  font-weight: 300;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.productItemPrice {
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.productItemButton {
+  width: 100%;
+}

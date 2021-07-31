@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  appearance: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 250ms ease 0s;
+  user-select: none;
+  position: relative;
+  vertical-align: middle;
+  outline: none;
+  border: 0px;
+  line-height: 1.2;
+  padding-top: 2px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: 52px;
+  background: rgb(75, 85, 72);
+  color: rgb(252, 252, 249);
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: rgb(43, 46, 43);
+}
