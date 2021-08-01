@@ -31,7 +31,7 @@
 
 .cartItems {
   height: 70vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   flex: 1 1 auto;
   padding: 1rem;
 }
@@ -60,4 +60,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+}
+
+.currencySelectContainer {
+  padding: 0 1rem 0rem;
+}
+
+.currencySelect {
+  padding: 8px 13px 5px 10px;
 }

@@ -12,6 +12,8 @@ interface IProps {
   currency?: string;
   onUpdateItem: Function;
   onRemoveItem: Function;
+  onCurrencyUpdated: Function;
+  currencyList: Array<string>;
 }
 
 function CartSidebar({
@@ -21,9 +23,11 @@ function CartSidebar({
   currency,
   onUpdateItem = () => {},
   onRemoveItem = () => {},
+  onCurrencyUpdated = () => {},
+  currencyList,
 }: IProps) {
-  const handleSubmitPersonalizationForm = (formValues: {}) => {
-    console.log(formValues);
+  const handleCurrencyChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    onCurrencyUpdated(e.currentTarget.value);
   };
 
   const total = cartDetails.reduce((currPrice, item) => {
@@ -38,6 +42,21 @@ function CartSidebar({
             <ChevronRightIcon />
           </span>
           <span className={style.headerText}>Your cart</span>
+        </div>
+        <div className={style.currencySelectContainer}>
+          <select
+            onChange={handleCurrencyChange}
+            className={style.currencySelect}
+            defaultValue={currency}
+          >
+            {currencyList.map((currency) => {
+              return (
+                <option value={currency} key={currency}>
+                  {currency}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className={style.cartItems}>
           <div>

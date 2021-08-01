@@ -11,13 +11,21 @@ import CartSidebar from "../components/CartSidebar";
 import { ICartItem } from "../components/CartItem";
 
 export interface IHomepageProps extends IProductListProps {
-  currency: Array<string>;
+  currencyList: Array<string>;
+  gqlClient: {};
+  // gqlClient: Object<ApolloClient>;
 }
 
-export default function Home({ products, currency }: IHomepageProps) {
+export default function Home({
+  products,
+  currencyList,
+  gqlClient,
+}: IHomepageProps) {
   const [currentCurrency, setCurrentCurrency] = useState<string>(
-    currency[0] || "USD"
+    currencyList[0] || "USD"
   );
+  const [storeProducts, setStoreProducts] =
+    useState<Array<IProductItem>>(products);
   const [showCartSidebar, setShowCartSidebar] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Array<ICartItem>>([]);
 
@@ -76,6 +84,53 @@ export default function Home({ products, currency }: IHomepageProps) {
     setCartItems(_cartItems);
   };
 
+  const handleCurrencyUpdatd = (currency: string) => {
+    gqlClient
+      .query({
+        query: gql`
+          query Products($currency: Currency!) {
+            products {
+              id
+              price(currency: $currency)
+            }
+          }
+        `,
+        variables: { currency },
+      })
+      .then(({ data }: { data: { products: Array<IProductItem> } }) => {
+        updateProductList(data.products);
+        updateCartItems(data.products);
+        setCurrentCurrency(currency);
+      });
+  };
+
+  const updateProductList = (productList: Array<IProductItem>) => {
+    const updatedProductList = products.map((product) => {
+      const updatedProduct = productList.find((p) => product.id === p.id);
+      return {
+        ...product,
+        ...updatedProduct,
+      };
+    });
+    setStoreProducts(updatedProductList);
+  };
+
+  const updateCartItems = (productList: Array<IProductItem>) => {
+    const updatedCartItems = cartItems.map((cartItem: ICartItem) => {
+      const updatedCartItemProduct = productList.find(
+        (p) => cartItem.product.id === p.id
+      );
+      return {
+        ...cartItem,
+        product: {
+          ...cartItem.product,
+          ...updatedCartItemProduct,
+        },
+      };
+    });
+    setCartItems(updatedCartItems);
+  };
+
   return (
     <Layout title={"Products"} description={"All products from Lumin"}>
       <>
@@ -85,11 +140,13 @@ export default function Home({ products, currency }: IHomepageProps) {
           cartDetails={cartItems}
           onUpdateItem={handleUpdateItem}
           onRemoveItem={handleRemoveItem}
+          onCurrencyUpdated={handleCurrencyUpdatd}
           currency={currentCurrency}
+          currencyList={currencyList}
         />
         <PageHead />
         <ProductList
-          products={products}
+          products={storeProducts}
           currentCurrency={currentCurrency}
           onAddToCart={handleAddProductToCart}
         />
@@ -130,7 +187,7 @@ export async function getStaticProps() {
   return {
     props: {
       products: data.products,
-      currency: data.currency,
+      currencyList: data.currency,
     },
   };
 }
