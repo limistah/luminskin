@@ -9,11 +9,17 @@ interface IProps {
   product: IProductItem;
   show: boolean;
   onClose: Function;
+  onPersonalized?: Function;
 }
 
-function ProductSidebar({ show, onClose, product }: IProps) {
+function ProductSidebar({
+  show,
+  onClose,
+  product,
+  onPersonalized = () => {},
+}: IProps) {
   const handleSubmitPersonalizationForm = (formValues: {}) => {
-    console.log(formValues);
+    onPersonalized(formValues);
   };
 
   return (
@@ -31,7 +37,7 @@ function ProductSidebar({ show, onClose, product }: IProps) {
           </span>
         </div>
         <div>
-          <h2>First, let's personalize</h2>
+          <h2>{`First, let's personalize`}</h2>
           <p>
             Products that you receive may vary according to your age bracket &
             skin type to optimize results.

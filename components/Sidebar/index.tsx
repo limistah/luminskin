@@ -4,7 +4,7 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 interface IProps {
   onClose: Function;
   show: boolean;
-  children: React.ReactElement;
+  children: React.ReactElement | string;
 }
 
 function Sidebar({

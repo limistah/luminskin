@@ -21,29 +21,36 @@ export type IProductItem = {
   product_options: Array<IProductOption>;
   id: string;
   image_url: string;
+  onAddToCart?: Function;
 };
 
 export interface IProductListProps {
   products: Array<IProductItem>;
   currentCurrency: string;
+  onAddToCart?: Function;
 }
 
 function ProductItem({
-  title,
-  price,
-  image_url,
-  currency,
+  onAddToCart = () => {},
   ...props
 }: IProductItem): React.ReactElement {
   const [showSidebar, setShowSidebar] = useState(false);
+
+  const { title, price, image_url, currency } = props;
 
   const handleAddToCart = () => {
     setShowSidebar(true);
   };
 
+  const handlePersonalized = (personalizationValues: object) => {
+    setShowSidebar(false);
+    onAddToCart(props, personalizationValues);
+  };
+
   return (
     <div className={styles.productItemContainer}>
       <ProductSidebar
+        onPersonalized={handlePersonalized}
         show={showSidebar}
         onClose={() => setShowSidebar(false)}
         product={{ ...props, title, price, image_url, currency }}
@@ -65,6 +72,7 @@ function ProductItem({
 function ProductList({
   products,
   currentCurrency,
+  onAddToCart = () => {},
 }: IProductListProps): React.ReactElement {
   return (
     <div className={styles.productListContainer}>
@@ -78,6 +86,7 @@ function ProductList({
             id={product.id}
             product_options={product.product_options}
             currency={currentCurrency}
+            onAddToCart={onAddToCart}
           />
         );
       })}

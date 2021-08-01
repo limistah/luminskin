@@ -20,7 +20,8 @@ function PersonalizationForm({ productOptions, onSubmit = () => {} }: IProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(formValues);
+    const values = Object.values(formValues);
+    onSubmit(formValues, values);
   };
 
   return (
