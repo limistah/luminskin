@@ -1,26 +1,42 @@
 import React from "react";
-import { IProductItem } from "../ProductList";
 import Sidebar from "../Sidebar";
-import style from "./ProductSidebar.module.css";
-import Image from "next/image";
-import PersonalizationForm from "../PersonalizationForm";
+import style from "./CartSidebar.module.css";
+import Cartitem, { ICartItem } from "../CartItem";
 
 interface IProps {
   show: boolean;
   onClose: Function;
-  cartDetails: {};
+  cartDetails: Array<ICartItem>;
+  currency?: string;
+  onUpdateItem: Function;
 }
 
-function ProductSidebar({ show, onClose, cartDetails }: IProps) {
+function CartSidebar({
+  show,
+  onClose,
+  cartDetails,
+  currency,
+  onUpdateItem = () => {},
+}: IProps) {
   const handleSubmitPersonalizationForm = (formValues: {}) => {
     console.log(formValues);
   };
 
   return (
     <Sidebar show={show} onClose={onClose}>
-      <>Cart</>
+      <>
+        {cartDetails.map((cartItem, index) => (
+          <Cartitem
+            {...cartItem}
+            key={index}
+            index={index}
+            currency={currency}
+            onUpdateItem={onUpdateItem}
+          />
+        ))}
+      </>
     </Sidebar>
   );
 }
 
-export default ProductSidebar;
+export default CartSidebar;
