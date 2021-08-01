@@ -26,6 +26,10 @@ function CartSidebar({
     console.log(formValues);
   };
 
+  const total = cartDetails.reduce((currPrice, item) => {
+    return currPrice + item.count * Number(item.product.price);
+  }, 0);
+
   return (
     <Sidebar show={show} onClose={onClose}>
       <div className={style.sidebar}>
@@ -53,7 +57,7 @@ function CartSidebar({
           <div className={style.cartFooterTotal}>
             <span>Subtotal</span>
             <span>
-              {currency} {123}
+              {currency} {total}
             </span>
           </div>
           <div>
