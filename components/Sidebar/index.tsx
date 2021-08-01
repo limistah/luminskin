@@ -19,7 +19,7 @@ function Sidebar({
     setOpenDrawer(show);
   }, [show]);
 
-  const toggleDrawer = (open: boolean) => (event: Event) => {
+  const toggleDrawer = (open: boolean) => (event: any) => {
     if (
       event &&
       event.type === "keydown" &&
