@@ -1,6 +1,7 @@
 import React from "react";
 import { IProductItem } from "../ProductList";
 import Image from "next/image";
+import style from "./CartItem.module.css";
 
 export interface ICartItem {
   product: IProductItem;
@@ -34,25 +35,39 @@ function Cartitem({
     );
   };
   return (
-    <div>
-      <div>
-        <div className="title">{product.title}</div>
-        <div>
+    <div className={style.cartItemContainer}>
+      <div className={style.cartItemInfo}>
+        <h6 className={style.cartItemTitle}>{product.title}</h6>
+        <div className={style.cartItemOptions}>
           {options.map((option, index) => {
             return (
               <>
-                <span key={index}>{option}</span>
+                <span className={style.cartItemOption} key={index}>
+                  {option}
+                </span>
                 {/* {index + 1 < options.length && " | "} */}
               </>
             );
           })}
         </div>
-        <div>One time purchase of Two Month supply.</div>
-        <div>
-          <div>
-            <div onClick={() => handleUpdateCount(false)}>-</div>
-            <div>{count}</div>
-            <div onClick={() => handleUpdateCount()}>+</div>
+        <div className={style.cartItemSubType}>
+          One time purchase of Two Month supply.
+        </div>
+        <div className={style.cartItemQty}>
+          <div className={style.cartItemCounter}>
+            <div
+              className={style.cartItemCountAction}
+              onClick={() => handleUpdateCount(false)}
+            >
+              -
+            </div>
+            <div className={style.cartItemCountVal}>{count}</div>
+            <div
+              className={style.cartItemCountAction}
+              onClick={() => handleUpdateCount()}
+            >
+              +
+            </div>
           </div>
           <div>
             {currency} {count * Number(product.price)}
@@ -60,8 +75,8 @@ function Cartitem({
         </div>
       </div>
 
-      <div>
-        <Image src={product.image_url} width="150" height="150" />
+      <div className={style.cartItemImage}>
+        <Image src={product.image_url} width="80" height="80" />
       </div>
     </div>
   );
