@@ -10,6 +10,7 @@ interface IProps {
   onClose: Function;
   cartDetails: Array<ICartItem>;
   currency?: string;
+  loadingState?: string;
   onUpdateItem: Function;
   onRemoveItem: Function;
   onCurrencyUpdated: Function;
@@ -25,6 +26,7 @@ function CartSidebar({
   onRemoveItem = () => {},
   onCurrencyUpdated = () => {},
   currencyList,
+  loadingState,
 }: IProps) {
   const handleCurrencyChange = (e: React.FormEvent<HTMLSelectElement>) => {
     onCurrencyUpdated(e.currentTarget.value);
@@ -56,7 +58,8 @@ function CartSidebar({
                 </option>
               );
             })}
-          </select>
+          </select>{" "}
+          {loadingState}
         </div>
         <div className={style.cartItems}>
           <div>

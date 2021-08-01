@@ -28,7 +28,9 @@ export default function Home({
     useState<Array<IProductItem>>(products);
   const [showCartSidebar, setShowCartSidebar] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Array<ICartItem>>([]);
+  const [loadingState, setLoadingState] = useState<string>("");
 
+  // Add new product to the cart or update an existing one
   const handleAddProductToCart = (
     productDetails: IProductItem,
     selectedOptions: {}
@@ -63,16 +65,29 @@ export default function Home({
     }
   };
 
+  /**
+   * Close the cart sidebar, using the `show` state
+   * @param show boolean
+   */
   const handleCloseCartSidebar = (show: boolean) => {
     setShowCartSidebar(show);
   };
 
+  /**
+   * Change the value in a cart item
+   * @param item A ICartItem for the update
+   * @param index The index of the cart item to use for the update
+   */
   const handleUpdateItem = (item: ICartItem, index: number) => {
     const _cartItems = [...cartItems];
     _cartItems.splice(index, 1, item);
     setCartItems(_cartItems);
   };
 
+  /**
+   * Remove an item from the cart
+   * @param index The index of the item to remove
+   */
   const handleRemoveItem = (index: number) => {
     const _cartItems = [...cartItems];
     _cartItems.splice(index, 1);
@@ -84,8 +99,14 @@ export default function Home({
     setCartItems(_cartItems);
   };
 
+  /**
+   * Loads new pricelist for the new currency
+   * @param currency A currency unit to use to query for new price
+   */
   const handleCurrencyUpdatd = (currency: string) => {
+    setLoadingState("Loading...");
     gqlClient
+      // @ts-ignore
       .query({
         query: gql`
           query Products($currency: Currency!) {
@@ -97,10 +118,25 @@ export default function Home({
         `,
         variables: { currency },
       })
-      .then(({ data }: { data: { products: Array<IProductItem> } }) => {
-        updateProductList(data.products);
-        updateCartItems(data.products);
-        setCurrentCurrency(currency);
+      .then(
+        ({
+          data,
+          error,
+        }: {
+          data: { products: Array<IProductItem> };
+          error: string;
+        }) => {
+          updateProductList(data.products);
+          updateCartItems(data.products);
+          setCurrentCurrency(currency);
+          setLoadingState("");
+          if (error) {
+            setLoadingState("An error occurred");
+          }
+        }
+      )
+      .catch((_: any) => {
+        setLoadingState(`Error: ${_.message}`);
       });
   };
 
@@ -143,6 +179,7 @@ export default function Home({
           onCurrencyUpdated={handleCurrencyUpdatd}
           currency={currentCurrency}
           currencyList={currencyList}
+          loadingState={loadingState}
         />
         <PageHead />
         <ProductList
