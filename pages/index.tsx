@@ -140,6 +140,10 @@ export default function Home({
       });
   };
 
+  /**
+   * Update the product list, setting the newly fetched data on the locally existing data
+   * @param productList An array of the newly fetched product list
+   */
   const updateProductList = (productList: Array<IProductItem>) => {
     const updatedProductList = products.map((product) => {
       const updatedProduct = productList.find((p) => product.id === p.id);
@@ -151,6 +155,10 @@ export default function Home({
     setStoreProducts(updatedProductList);
   };
 
+  /**
+   * Update the cart items list, setting the newly fetched data on the locally existing data
+   * @param productList An array of the newly fetched product list
+   */
   const updateCartItems = (productList: Array<IProductItem>) => {
     const updatedCartItems = cartItems.map((cartItem: ICartItem) => {
       const updatedCartItemProduct = productList.find(
@@ -192,6 +200,7 @@ export default function Home({
   );
 }
 
+// Fetch and store this data statically while building to increase the response time when this page is loaded from a browser
 export async function getStaticProps() {
   const client = new ApolloClient({
     uri: "https://pangaea-interviews.now.sh/api/graphql",
