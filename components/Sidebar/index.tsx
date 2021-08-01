@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import style from "./Sidebar.module.css";
 
 interface IProps {
   onClose: Function;
@@ -39,7 +40,7 @@ function Sidebar({
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
-        {children}
+        <div className={style.drawer}>{children}</div>
       </SwipeableDrawer>
     </div>
   );

@@ -35,14 +35,13 @@ export default function Home({ products, currency }: IHomepageProps) {
 
     if (existingIndex > -1) {
       // Increment the cart count if the item exists
-      setCartItems((items) =>
-        items.map((item) => {
-          if (item.product.id === productDetails.id) {
-            item.count++;
-          }
-          return item;
-        })
-      );
+      const newCartItem = [...cartItems];
+      const _cartItem = cartItems[existingIndex];
+      newCartItem.splice(existingIndex, 1, {
+        ..._cartItem,
+        count: _cartItem.count + 1,
+      });
+      setCartItems(newCartItem);
     } else {
       // Push the item to the cart since the combination of the item and the product options does not exist already
       setCartItems((items) => [

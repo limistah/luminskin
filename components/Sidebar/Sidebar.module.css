@@ -1,0 +1,10 @@
+.drawer {
+  background-color: #f2f2ef;
+  height: 100%;
+  max-width: 550px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
