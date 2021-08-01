@@ -3,6 +3,8 @@
   padding: 1rem;
   background-color: #fff;
   margin-bottom: 1rem;
+  position: relative;
+  min-width: 25rem;
 }
 
 .cartItemTitle {
@@ -33,6 +35,8 @@
   justify-content: center;
   align-items: center;
   width: 80px;
+  margin-left: 2rem;
+  margin-right: 1rem;
 }
 
 .cartItemInfo {
@@ -49,7 +53,7 @@
 
 .cartItemCounter {
   border: 0.5px solid #bcbcbc;
-  margin: 1rem 0;
+  margin-top: 1rem;
   display: inline-flex;
   padding: 7px 0;
 
@@ -64,7 +68,15 @@
 
 .cartItemQty {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
+}
+
+.cartItemRemove {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding: 0.23rem;
+  border: 0.5px solid #bcbcbc1f;
+  cursor: pointer;
 }

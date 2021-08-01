@@ -10,6 +10,7 @@ export interface ICartItem {
   currency?: string;
   index?: number;
   onUpdateItem?: Function;
+  onRemoveItem?: Function;
 }
 
 function Cartitem({
@@ -19,6 +20,7 @@ function Cartitem({
   currency,
   index,
   onUpdateItem = () => {},
+  onRemoveItem = () => {},
 }: ICartItem) {
   const handleUpdateCount = (increment = true) => {
     let newCount = count;
@@ -36,6 +38,12 @@ function Cartitem({
   };
   return (
     <div className={style.cartItemContainer}>
+      <span
+        className={style.cartItemRemove}
+        onClick={() => onRemoveItem(index)}
+      >
+        X
+      </span>
       <div className={style.cartItemInfo}>
         <h6 className={style.cartItemTitle}>{product.title}</h6>
         <div className={style.cartItemOptions}>

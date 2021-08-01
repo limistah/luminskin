@@ -65,6 +65,17 @@ export default function Home({ products, currency }: IHomepageProps) {
     setCartItems(_cartItems);
   };
 
+  const handleRemoveItem = (index: number) => {
+    const _cartItems = [...cartItems];
+    _cartItems.splice(index, 1);
+
+    // There is no need to keep the sidebar, remove it when there is no more item in the cart
+    if (!_cartItems.length) {
+      setShowCartSidebar(false);
+    }
+    setCartItems(_cartItems);
+  };
+
   return (
     <Layout title={"Products"} description={"All products from Lumin"}>
       <>
@@ -73,6 +84,7 @@ export default function Home({ products, currency }: IHomepageProps) {
           onClose={handleCloseCartSidebar}
           cartDetails={cartItems}
           onUpdateItem={handleUpdateItem}
+          onRemoveItem={handleRemoveItem}
           currency={currentCurrency}
         />
         <PageHead />

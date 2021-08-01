@@ -11,6 +11,7 @@ interface IProps {
   cartDetails: Array<ICartItem>;
   currency?: string;
   onUpdateItem: Function;
+  onRemoveItem: Function;
 }
 
 function CartSidebar({
@@ -19,6 +20,7 @@ function CartSidebar({
   cartDetails,
   currency,
   onUpdateItem = () => {},
+  onRemoveItem = () => {},
 }: IProps) {
   const handleSubmitPersonalizationForm = (formValues: {}) => {
     console.log(formValues);
@@ -42,6 +44,7 @@ function CartSidebar({
                 index={index}
                 currency={currency}
                 onUpdateItem={onUpdateItem}
+                onRemoveItem={onRemoveItem}
               />
             ))}
           </div>
