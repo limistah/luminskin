@@ -1,11 +1,17 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styles from "./Button.module.css";
 
-function Button({ children, onClick }) {
+interface IProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  type: string;
+  children: React.ReactElement;
+}
+
+function Button({ children, type, onClick }: IProps) {
   return (
-    <div onClick={onClick} className={styles.button}>
+    <button onClick={onClick} className={styles.button} type={type}>
       {children}
-    </div>
+    </button>
   );
 }
 

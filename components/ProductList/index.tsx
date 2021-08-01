@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../Button";
 import styles from "./ProductList.module.css";
+import ProductSidebar from "../ProductSidebar";
 
-type IProductItem = {
+export type IProductOption = {
+  prefix: string;
+  suffix: string;
+  title: string;
+  options: Array<{
+    id: string;
+    value: string;
+  }>;
+};
+
+export type IProductItem = {
   title: string;
   price: string;
   currency: string;
-  product_options: Array<{
-    prefix: string;
-    suffix: string;
-    title: string;
-    options: {
-      id: string;
-      value: string;
-    };
-  }>;
+  product_options: Array<IProductOption>;
   id: string;
   image_url: string;
 };
@@ -30,9 +33,21 @@ function ProductItem({
   price,
   image_url,
   currency,
+  ...props
 }: IProductItem): React.ReactElement {
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const handleAddToCart = () => {
+    setShowSidebar(true);
+  };
+
   return (
     <div className={styles.productItemContainer}>
+      <ProductSidebar
+        show={showSidebar}
+        onClose={() => setShowSidebar(false)}
+        product={{ ...props, title, price, image_url, currency }}
+      />
       <a>
         <Image src={image_url} className="" width="100px" height="90px" />
       </a>
@@ -41,7 +56,7 @@ function ProductItem({
         {currency} {price}
       </div>
       <div className={styles.productItemButton}>
-        <Button>Add to cart</Button>
+        <Button onClick={handleAddToCart}>Add to cart</Button>
       </div>
     </div>
   );
@@ -56,9 +71,12 @@ function ProductList({
       {products.map((product) => {
         return (
           <ProductItem
+            key={product.id}
             title={product.title}
             image_url={product.image_url}
             price={product.price}
+            id={product.id}
+            product_options={product.product_options}
             currency={currentCurrency}
           />
         );

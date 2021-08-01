@@ -4,6 +4,7 @@ import PageHead from "../components/PageHead";
 import ProductList, { IProductListProps } from "../components/ProductList";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useState } from "react";
+import Sidebar from "../components/Sidebar";
 
 export interface IHomepageProps extends IProductListProps {
   currency: Array<string>;
@@ -15,6 +16,7 @@ export default function Home({ products, currency }: IHomepageProps) {
   return (
     <Layout title={"Products"} description={"All products from Lumin"}>
       <>
+        <Sidebar />
         <PageHead />
         <ProductList products={products} currentCurrency={currentCurrency} />
       </>
